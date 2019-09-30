@@ -1,0 +1,60 @@
+{
+  "name": "jcc-solidity-utils",
+  "version": "0.0.3",
+  "description": "jcc solidity utils",
+  "main": "truffle-config.js",
+  "files": [
+    "/contracts/**/*.sol",
+    "/build/contracts/*.json",
+    "!/contracts/mocks"
+  ],
+  "scripts": {
+    "clean": "rm -Rf ./build",
+    "compile": "truffle compile",
+    "console": "truffle console",
+    "flatten": "mkdir -p build && truffle-flattener contracts/**/*.sol >> build/bundle.sol",
+    "lint": "eslint './**/*.js?(x)'",
+    "migrate": "truffle migrate",
+    "networks": "truffle networks",
+    "postpublish": "npm run clean",
+    "prepublish": "npm run compile",
+    "test": "npm run clean && truffle test"
+  },
+  "author": "https://github.com/jccdex",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JCCDex/AHBCSalon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JCCDex/AHBCSalon/issues"
+  },
+  "homepage": "https://github.com/JCCDex/AHBCSalon/contract",
+  "keywords": [
+    "blockchain",
+    "moac",
+    "ethereum",
+    "jccdex",
+    "jingchang",
+    "contract",
+    "contracts",
+    "smart",
+    "smart-contract",
+    "smart-contracts",
+    "token",
+    "tokens"
+  ],
+  "devDependencies": {
+    "bignumber.js": "^8.0.1",
+    "eslint": "^5.14.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "ethjs-util": "^0.1.6",
+    "truffle": "^5.0.14",
+    "truffle-flattener": "^1.3.0",
+    "web3": "^1.0.0-beta.52"
+  }
+}
