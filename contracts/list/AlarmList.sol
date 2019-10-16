@@ -13,6 +13,8 @@ library AlarmList {
   {
     // 合约地址
     address contractAddr;
+    // 创建者地址
+    address creatorAddr;
     // 索引id
     uint256 idx;
     // 类型：0:一次性, 1:周期性
@@ -36,12 +38,24 @@ library AlarmList {
   /**
   @dev 增加新定时定义，重复的地址返回失败
    */
-  function insert(alarmMap storage self, address _addr, uint256 _type, uint256 _begin, uint256 _peroid) internal returns (bool){
+  function insert(
+    alarmMap storage self,
+    address _addr,
+    address _creator,
+    uint256 _type,
+    uint256 _begin,
+    uint256 _peroid) internal returns (bool){
     if (exist(self, _addr)) {
       return false;
     }
 
-    element memory e = element({contractAddr: _addr, idx: self.list.length, alarmType: _type, begin: _begin, peroid: _peroid});
+    element memory e = element({
+      contractAddr: _addr,
+      creatorAddr: _creator,
+      idx: self.list.length,
+      alarmType: _type,
+      begin: _begin,
+      peroid: _peroid});
     self.list.push(e);
     self.mapList[_addr] = e.idx;
     return true;

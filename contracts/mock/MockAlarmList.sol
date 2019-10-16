@@ -9,8 +9,8 @@ contract MockAlarmList {
 
   AlarmList.alarmMap tasks;
 
-  function insert(address _addr, uint256 _type, uint256 _begin, uint256 _peroid) public returns (bool) {
-    return tasks.insert(_addr, _type, _begin, _peroid);
+  function insert(address _addr, address _creator, uint256 _type, uint256 _begin, uint256 _peroid) public returns (bool) {
+    return tasks.insert(_addr, _creator, _type, _begin, _peroid);
   }
 
   function remove(address _addr) public returns (bool) {

@@ -10,13 +10,13 @@ contract('AlarmList', (accounts) => {
   });
 
   it('AlarmList test', async () => {
-    await al.insert(accounts[1], 0, Math.round(Date.now() / 1000), 0);
-    await al.insert(accounts[2], 1, Math.round(Date.now() / 1000), 600);
+    await al.insert(accounts[1], accounts[1], 0, Math.round(Date.now() / 1000), 0);
+    await al.insert(accounts[2], accounts[1], 1, Math.round(Date.now() / 1000), 600);
     let count = await al.count();
     assert.equal(count, 2);
 
-    await al.insert(accounts[2], 0, Math.round(Date.now() / 1000), 0);
-    await al.insert(accounts[3], 1, Math.round(Date.now() / 1000), 500);
+    await al.insert(accounts[2], accounts[1], 0, Math.round(Date.now() / 1000), 0);
+    await al.insert(accounts[3], accounts[1], 1, Math.round(Date.now() / 1000), 500);
     count = await al.count();
     assert.equal(count, 3);
 
@@ -26,12 +26,12 @@ contract('AlarmList', (accounts) => {
     assert.equal(count, 2);
 
     // 当前数据顺序  account:[1,3]
-    await al.insert(accounts[4], 1, Math.round(Date.now() / 1000), 300);
+    await al.insert(accounts[4], accounts[1], 1, Math.round(Date.now() / 1000), 300);
     // 当前数据顺序  account:[1,3,4]
     let task = await al.get(2)
     assert.equal(accounts[4], task.contractAddr);
 
-    await al.insert(accounts[2], 0, Math.round(Date.now() / 1000), 0);
+    await al.insert(accounts[2], accounts[1], 0, Math.round(Date.now() / 1000), 0);
     // 当前数据顺序  account:[1,3,4,2]
     task = await al.get(2)
     assert.equal(accounts[4], task.contractAddr);
@@ -41,7 +41,7 @@ contract('AlarmList', (accounts) => {
     count = await al.count();
     assert.equal(count, 3);
 
-    await al.insert(accounts[3], 1, Math.round(Date.now() / 1000), 100);
+    await al.insert(accounts[3], accounts[1], 1, Math.round(Date.now() / 1000), 100);
     // 当前数据顺序  account:[1,2,4,3]
     task = await al.get(3)
     assert.equal(accounts[3], task.contractAddr);
