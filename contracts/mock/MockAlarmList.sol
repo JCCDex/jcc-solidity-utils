@@ -21,6 +21,10 @@ contract MockAlarmList {
     return tasks.get(_idx);
   }
 
+  function getByAddr(address _addr) public view returns (AlarmList.element) {
+    return tasks.getByAddr(_addr);
+  }
+
   function getList(uint256 from, uint256 _count) public view returns (AlarmList.element[] memory) {
     return tasks.getList(from, _count);
   }

@@ -87,6 +87,11 @@ library AlarmList {
     return self.list[index];
   }
 
+  function getByAddr(alarmMap storage self, address _addr) internal view returns (AlarmList.element){
+    require(exist(self, _addr), "alarm must exist");
+    return self.list[self.mapList[_addr]];
+  }
+
   /**
   @dev 从指定位置返回多条（不多于count）地址记录,如果不足则空缺
    */

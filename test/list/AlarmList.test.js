@@ -46,6 +46,9 @@ contract('AlarmList', (accounts) => {
     task = await al.get(3)
     assert.equal(accounts[3], task.contractAddr);
 
+    task = await al.getByAddr(accounts[3])
+    assert.equal(accounts[3], task.contractAddr);
+
     let all = await al.getList(0, 4);
     assert.equal(all.length, 4);
   });
