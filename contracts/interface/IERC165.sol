@@ -3,7 +3,7 @@ pragma solidity 0.4.24;
 /**
  * @dev A standard for detecting smart contract interfaces. See https://goo.gl/cxQCse.
  */
-interface ERC165 {
+interface IERC165 {
 
   /**
    * @dev Checks if the smart contract includes a specific interface.
