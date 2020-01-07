@@ -2,6 +2,9 @@ pragma solidity 0.4.24;
 
 /**
  * @dev A standard for detecting smart contract interfaces. See https://goo.gl/cxQCse.
+ * get interfaceID in geth use follow command:
+ * web3.sha3("supportsInterface(bytes4)", ture)
+ * web3.sha3("yourFunction(uint256,address)", ture)
  */
 interface IERC165 {
 
