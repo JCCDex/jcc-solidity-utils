@@ -4,21 +4,21 @@ contract JCCGetPrice {
     address owner;
 
     uint256 constant toWei = 10 ** 10;
-    mapping(string => uint256) public prices;
+    mapping(string => uint256)  _list;
 
     constructor() public{
         owner = msg.sender;
     }
 
     //设置的价格应该是实际价格*(10 ** 10),方便处理
-    function set(string token, uint256 price) public returns (uint256 price){
+    function setPrice(string _token, uint256 _price) internal returns (uint256){
         assert(msg.sender == owner);
-        require(price > 0);
-        prices[token] = price;
-        return price;
+        require(_price > 0);
+        _list[_token] = _price;
+        return _price;
     }
 
-    function get(string token) public view returns (uint256 price){
-        return prices[token];
+    function getPrice(string _token) public view returns (uint256){
+        return _list[_token];
     }
 }
