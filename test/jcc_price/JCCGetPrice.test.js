@@ -10,7 +10,6 @@ contract('JCCGetPrice', (accounts) => {
   it('set price by owner', async () => {
     //assert.equal(1,1);
     PriceTest = await JCCGetPrice.new();
-    let ret = await PriceTest.setPrice(_token, _price, { from: accounts[0] });
     //assert.equal(1,1);
     let { logs } = await PriceTest.setPrice(_token, _price, { from: accounts[0] });
     let Events = logs.find(e => e.event === 'EnPrice');
