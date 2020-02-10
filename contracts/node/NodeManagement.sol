@@ -15,44 +15,128 @@ contract NodeManagemenet is Administrative {
         // 以太坊节点
         bytes32[] ethereumNodes;
         // MOAC节点
-        bytes32[] jingtumNodes;
+        bytes32[] moacNodes;
         // 井畅浏览器节点
         bytes32[] explorerNodes;
     }
 
     constructor() public Administrative() {}
 
-    function isValidType(string nodeType) internal returns (bool) {
-        bytes32 key = keccak256(abi.encodePacked(nodeType));
-        return (key == keccak256(abi.encodePacked("jingtumNodes")) || key == keccak256(abi.encodePacked("infoNodes")) || key == keccak256(abi.encodePacked(("ethereumNodes")) || key == keccak256(abi.encodePacked("jingtumNodes")) || key == keccak256(abi.encodePacked("explorerNodes")));
-    }
-
     function getNodes() public view returns (NodeManagemenet.Nodes) {
         return allNodes;
     }
 
-    function updateNodes(string nodeType, bytes32[] nodes)
+    function updateJingtumNodes(bytes32[] nodes)
         public
         onlyPrivileged
         returns (bool updated)
     {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        require(isValidType(nodeType), "node type must be valid");
-        allNodes[nodeType] = nodes;
+        allNodes.jingtumNodes = nodes;
         return true;
     }
 
-    function insertNodes(string nodeType, bytes32[] nodes)
+    function insertJingtumNodes(bytes32[] nodes)
         public
         onlyPrivileged
-        returns (bool inserted)
+        returns (bool updated)
     {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        require(isValidType(nodeType), "node type must be valid");
-
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
-            allNodes[nodeType].push(nodes[i]);
+            allNodes.jingtumNodes.push(nodes[i]);
+        }
+        return true;
+    }
+
+    function updateInfoNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        allNodes.infoNodes = nodes;
+        return true;
+    }
+
+    function insertInfoNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        uint256 len = nodes.length;
+        for (uint256 i = 0; i < len; i++) {
+            allNodes.infoNodes.push(nodes[i]);
+        }
+        return true;
+    }
+
+    function updateEthereumNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        allNodes.ethereumNodes = nodes;
+        return true;
+    }
+
+    function insertEthereumNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        uint256 len = nodes.length;
+        for (uint256 i = 0; i < len; i++) {
+            allNodes.ethereumNodes.push(nodes[i]);
+        }
+        return true;
+    }
+
+    function updateMoacNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        allNodes.moacNodes = nodes;
+        return true;
+    }
+
+    function insertMoacNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        uint256 len = nodes.length;
+        for (uint256 i = 0; i < len; i++) {
+            allNodes.moacNodes.push(nodes[i]);
+        }
+        return true;
+    }
+
+    function updateExplorerNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        allNodes.explorerNodes = nodes;
+        return true;
+    }
+
+    function insertExplorerNodes(bytes32[] nodes)
+        public
+        onlyPrivileged
+        returns (bool updated)
+    {
+        require(nodes.length > 0, "node's length must be bigger than 0");
+        uint256 len = nodes.length;
+        for (uint256 i = 0; i < len; i++) {
+            allNodes.explorerNodes.push(nodes[i]);
         }
         return true;
     }
