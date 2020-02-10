@@ -4,139 +4,99 @@ pragma experimental ABIEncoderV2;
 import "../owner/Administrative.sol";
 
 contract NodeManagemenet is Administrative {
-    Nodes private allNodes;
+    Node private allNode;
 
     // 定义所有节点结构
-    struct Nodes {
+    struct Node {
         // 井通节点
-        bytes32[] jingtumNodes;
+        string[] jingtumNodes;
         // 井畅info服务器节点
-        bytes32[] infoNodes;
+        string[] infoNodes;
         // 以太坊节点
-        bytes32[] ethereumNodes;
+        string[] ethereumNodes;
         // MOAC节点
-        bytes32[] moacNodes;
+        string[] moacNodes;
         // 井畅浏览器节点
-        bytes32[] explorerNodes;
+        string[] explorerNodes;
     }
 
     constructor() public Administrative() {}
 
-    function getNodes() public view returns (NodeManagemenet.Nodes) {
-        return allNodes;
+    function getNode() public view returns (NodeManagemenet.Node) {
+        return allNode;
     }
 
-    function updateJingtumNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function updateJingtumNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        allNodes.jingtumNodes = nodes;
+        allNode.jingtumNodes = nodes;
         return true;
     }
 
-    function insertJingtumNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function insertJingtumNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
-            allNodes.jingtumNodes.push(nodes[i]);
+            allNode.jingtumNodes.push(nodes[i]);
         }
         return true;
     }
 
-    function updateInfoNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function updateMoacNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        allNodes.infoNodes = nodes;
+        allNode.moacNodes = nodes;
         return true;
     }
 
-    function insertInfoNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function insertMoacNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
-            allNodes.infoNodes.push(nodes[i]);
+            allNode.moacNodes.push(nodes[i]);
         }
         return true;
     }
 
-    function updateEthereumNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function updateInfoNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        allNodes.ethereumNodes = nodes;
+        allNode.infoNodes = nodes;
         return true;
     }
 
-    function insertEthereumNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function insertInfoNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
-            allNodes.ethereumNodes.push(nodes[i]);
+            allNode.infoNodes.push(nodes[i]);
         }
         return true;
     }
 
-    function updateMoacNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function updateEthereumNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        allNodes.moacNodes = nodes;
+        allNode.ethereumNodes = nodes;
         return true;
     }
 
-    function insertMoacNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function insertEthereumNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
-            allNodes.moacNodes.push(nodes[i]);
+            allNode.ethereumNodes.push(nodes[i]);
         }
         return true;
     }
 
-    function updateExplorerNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function updateExplorerNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
-        allNodes.explorerNodes = nodes;
+        allNode.explorerNodes = nodes;
         return true;
     }
 
-    function insertExplorerNodes(bytes32[] nodes)
-        public
-        onlyPrivileged
-        returns (bool updated)
-    {
+    function insertExplorerNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
-            allNodes.explorerNodes.push(nodes[i]);
+            allNode.explorerNodes.push(nodes[i]);
         }
         return true;
     }
