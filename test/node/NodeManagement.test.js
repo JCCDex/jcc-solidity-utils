@@ -6,40 +6,40 @@ contract('NodeManagemenet', () => {
     let nodes = await inst.getNode();
     assert.deepEqual(nodes.jingtumNodes, []);
 
-    await inst.updateJingtumNodes(["https://srje071qdew231.jccdex.cn"])
+    await inst.updateJingtumNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.jingtumNodes, ["https://srje071qdew231.jccdex.cn"]);
-    await inst.insertJingtumNodes(["https://srje071qdew23.jccdex.cn"])
+    assert.deepEqual(nodes.jingtumNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
+    await inst.insertJingtumNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.jingtumNodes, ["https://srje071qdew231.jccdex.cn", "https://srje071qdew23.jccdex.cn"]);
+    assert.deepEqual(nodes.jingtumNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e", "0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
 
-    await inst.updateMoacNodes(["https://srje071qdew231.jccdex.cn"])
+    await inst.updateMoacNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.moacNodes, ["https://srje071qdew231.jccdex.cn"]);
-    await inst.insertMoacNodes(["https://srje071qdew23.jccdex.cn"])
+    assert.deepEqual(nodes.moacNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
+    await inst.insertMoacNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.moacNodes, ["https://srje071qdew231.jccdex.cn", "https://srje071qdew23.jccdex.cn"]);
+    assert.deepEqual(nodes.moacNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e", "0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
     
-    await inst.updateInfoNodes(["https://srje071qdew231.jccdex.cn"])
+    await inst.updateInfoNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.infoNodes, ["https://srje071qdew231.jccdex.cn"]);
-    await inst.insertInfoNodes(["https://srje071qdew23.jccdex.cn"])
+    assert.deepEqual(nodes.infoNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
+    await inst.insertInfoNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.infoNodes, ["https://srje071qdew231.jccdex.cn", "https://srje071qdew23.jccdex.cn"]);
+    assert.deepEqual(nodes.infoNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e", "0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
     
-    await inst.updateEthereumNodes(["https://srje071qdew231.jccdex.cn"])
+    await inst.updateEthereumNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.ethereumNodes, ["https://srje071qdew231.jccdex.cn"]);
-    await inst.insertEthereumNodes(["https://srje071qdew23.jccdex.cn"])
+    assert.deepEqual(nodes.ethereumNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
+    await inst.insertEthereumNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.ethereumNodes, ["https://srje071qdew231.jccdex.cn", "https://srje071qdew23.jccdex.cn"]);
+    assert.deepEqual(nodes.ethereumNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e", "0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
     
-    await inst.updateExplorerNodes(["https://srje071qdew231.jccdex.cn"])
+    await inst.updateExplorerNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.explorerNodes, ["https://srje071qdew231.jccdex.cn"]);
-    await inst.insertExplorerNodes(["https://srje071qdew23.jccdex.cn"])
+    assert.deepEqual(nodes.explorerNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
+    await inst.insertExplorerNodes(["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"])
     nodes = await inst.getNode();
-    assert.deepEqual(nodes.explorerNodes, ["https://srje071qdew231.jccdex.cn", "https://srje071qdew23.jccdex.cn"]);
+    assert.deepEqual(nodes.explorerNodes, ["0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e", "0x68747470733a2f2f73726a65303731716465773233312e6a63636465782e636e"]);
     
 
   });

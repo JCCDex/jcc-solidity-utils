@@ -9,15 +9,15 @@ contract NodeManagemenet is Administrative {
     // 定义所有节点结构
     struct Node {
         // 井通节点
-        string[] jingtumNodes;
+        bytes32[] jingtumNodes;
         // 井畅info服务器节点
-        string[] infoNodes;
+        bytes32[] infoNodes;
         // 以太坊节点
-        string[] ethereumNodes;
+        bytes32[] ethereumNodes;
         // MOAC节点
-        string[] moacNodes;
+        bytes32[] moacNodes;
         // 井畅浏览器节点
-        string[] explorerNodes;
+        bytes32[] explorerNodes;
     }
 
     constructor() public Administrative() {}
@@ -26,13 +26,13 @@ contract NodeManagemenet is Administrative {
         return allNode;
     }
 
-    function updateJingtumNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
+    function updateJingtumNodes(bytes32[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         allNode.jingtumNodes = nodes;
         return true;
     }
 
-    function insertJingtumNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
+    function insertJingtumNodes(bytes32[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
@@ -41,13 +41,13 @@ contract NodeManagemenet is Administrative {
         return true;
     }
 
-    function updateMoacNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
+    function updateMoacNodes(bytes32[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         allNode.moacNodes = nodes;
         return true;
     }
 
-    function insertMoacNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
+    function insertMoacNodes(bytes32[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
@@ -56,13 +56,13 @@ contract NodeManagemenet is Administrative {
         return true;
     }
 
-    function updateInfoNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
+    function updateInfoNodes(bytes32[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         allNode.infoNodes = nodes;
         return true;
     }
 
-    function insertInfoNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
+    function insertInfoNodes(bytes32[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
@@ -71,13 +71,13 @@ contract NodeManagemenet is Administrative {
         return true;
     }
 
-    function updateEthereumNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
+    function updateEthereumNodes(bytes32[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         allNode.ethereumNodes = nodes;
         return true;
     }
 
-    function insertEthereumNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
+    function insertEthereumNodes(bytes32[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
@@ -86,13 +86,13 @@ contract NodeManagemenet is Administrative {
         return true;
     }
 
-    function updateExplorerNodes(string[] nodes) public onlyPrivileged returns (bool updated) {
+    function updateExplorerNodes(bytes32[] nodes) public onlyPrivileged returns (bool updated) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         allNode.explorerNodes = nodes;
         return true;
     }
 
-    function insertExplorerNodes(string[] nodes) public onlyPrivileged returns (bool inserted) {
+    function insertExplorerNodes(bytes32[] nodes) public onlyPrivileged returns (bool inserted) {
         require(nodes.length > 0, "node's length must be bigger than 0");
         uint256 len = nodes.length;
         for (uint256 i = 0; i < len; i++) {
