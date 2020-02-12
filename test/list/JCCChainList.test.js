@@ -1,12 +1,13 @@
 /* eslint-disable indent */
 /* eslint-disable semi */
 /* eslint-disable no-undef */
-const MockChainList = artifacts.require('MockChainList');
+const JCCChainList = artifacts.require('JCCChainList');
+const assertRevert = require('../helpers/assertRevert');
 
 contract('ChainList', (accounts) => {
   let al;
   beforeEach(async () => {
-    al = await MockChainList.new();
+    al = await JCCChainList.new();
   });
 
   it('ChainList test', async () => {
@@ -15,7 +16,7 @@ contract('ChainList', (accounts) => {
     let count = await al.count();
     assert.equal(count, 2);
 
-    await al.insert(0, 'BTC');
+    await assertRevert(al.insert(0, 'BTC'));
     await al.insert(2, 'LTC');
     count = await al.count();
     assert.equal(count, 3);

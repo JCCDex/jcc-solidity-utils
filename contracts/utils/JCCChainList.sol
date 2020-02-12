@@ -2,19 +2,28 @@ pragma solidity 0.4.24;
 pragma experimental ABIEncoderV2;
 
 import "../list/ChainList.sol";
+import "../owner/Administrative.sol";
 
 // 定义一个调用AddressList的合约
-contract MockChainList {
+contract JCCChainList is Administrative {
   using ChainList for ChainList.chainMap;
+
+  event LogChain(uint256 indexed chainId, bool add);
 
   ChainList.chainMap chains;
 
+  constructor() public Administrative() {}
+
   function insert(uint256 _id, string _symbol) public returns (bool) {
-    return chains.insert(_id, _symbol);
+    require(chains.insert(_id, _symbol), "add chain success");
+    emit LogChain(_id, true);
+    return true;
   }
 
   function remove(uint256 _id) public returns (bool) {
-    return chains.remove(_id);
+    require(chains.remove(_id), "add chain success");
+    emit LogChain(_id, false);
+    return true;
   }
 
   function get(uint256 _idx) public view returns (ChainList.element) {
