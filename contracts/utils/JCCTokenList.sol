@@ -2,6 +2,7 @@ pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
 import "../owner/Administrative.sol";
+import "../list/TokenList.sol";
 
 /**
  * Token清单
@@ -14,42 +15,66 @@ import "../owner/Administrative.sol";
  * 通证基于不同链的定义方式，以字符串形式保存
  */
 contract JCCTokenList is Administrative {
-  event LogChain(uint256 indexed chainId, string symbol, bool add);
+  using TokenList for TokenList.tokenMap;
 
-  // 通证定义
-  struct token {
-    uint256 id;
-    uint256 chainId;
-    /**
-      ETH类的通证通过合约地址区分，所有地址标记为0的为链原生通证
-      SWTC类的通证定义由"issuer/名称"来表示地址，issuer为空表示原生通证
-     */
-    string issuer;
-    // 简称
-    string symbol;
+  event Add(uint256 indexed tokenId);
+  event Remove(uint256 indexed tokenId);
+
+  TokenList.tokenMap tokens;
+
+  constructor() public Administrative() {}
+
+  function insert(uint256 _id, uint256 _chainId, string _issuer, string _symbol)
+    public
+    returns (bool)
+  {
+    require(
+      tokens.insert(_id, _chainId, _issuer, _symbol),
+      "add token success"
+    );
+    emit Add(_id);
+    return true;
   }
 
-  // 通证清单
-  mapping(uint256 => token) _tokens;
-
-  // 链上的所有通证清单
-  uint256[] _tokensInChain;
-
-  // 跨链映射的结构:建立动态数组，内容为tokenid，基于每个token id映射的数组相同
-  mapping(uint256 => uint256[]) _tokenMap;
-
-  function strlen(string memory _str) internal pure returns (uint256) {
-    return bytes(_str).length;
+  function remove(uint256 _id) public returns (bool) {
+    require(tokens.remove(_id), "remove token success");
+    emit Remove(_id);
+    return true;
   }
 
-  // function addToken(uint256 _id, uint256 _chainId )
-  // // fallback function
-  // function() public {
-  //   require(false, "never receive fund.");
-  // }
+  function get(uint256 _idx) public view returns (TokenList.element) {
+    return tokens.get(_idx);
+  }
 
-  // only owner can kill
-  function kill() public {
-    if (msg.sender == owner()) selfdestruct(owner());
+  function getById(uint256 _id) public view returns (TokenList.element) {
+    return tokens.getById(_id);
+  }
+
+  function getBySymbol(uint256 _chainId, string _symbol)
+    public
+    view
+    returns (TokenList.element)
+  {
+    return tokens.getBySymbol(_chainId, _symbol);
+  }
+
+  function getByIssuer(uint256 _chainId, string _issuer)
+    public
+    view
+    returns (TokenList.element)
+  {
+    return tokens.getByIssuer(_chainId, _issuer);
+  }
+
+  function getList(uint256 from, uint256 _count)
+    public
+    view
+    returns (TokenList.element[] memory)
+  {
+    return tokens.getList(from, _count);
+  }
+
+  function count() public view returns (uint256) {
+    return tokens.count();
   }
 }

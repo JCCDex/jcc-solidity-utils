@@ -111,6 +111,7 @@ library ChainList {
     returns (ChainList.element)
   {
     ChainList.element storage e = self.list[self.mapSymbol[getHash(_symbol)]];
+    // 因为删除增加操作，map对应的存储未动，要校验一次
     require(exist(self, e.id), "chain data must exist");
     return e;
   }

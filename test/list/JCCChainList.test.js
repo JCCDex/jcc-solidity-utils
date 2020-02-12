@@ -45,5 +45,8 @@ contract('ChainList', (accounts) => {
 
     let all = await al.getList(0, 4);
     assert.equal(all.length, 4);
+
+    await al.remove(2);
+    await assertRevert(al.getBySymbol('LTC'));
   });
 });

@@ -22,7 +22,7 @@ contract JCCChainList is Administrative {
   }
 
   function remove(uint256 _id) public returns (bool) {
-    require(chains.remove(_id), "add chain success");
+    require(chains.remove(_id), "remove chain success");
     emit Remove(_id);
     return true;
   }
