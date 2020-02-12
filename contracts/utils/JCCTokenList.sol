@@ -2,7 +2,6 @@ pragma solidity ^0.4.24;
 pragma experimental ABIEncoderV2;
 
 import "../owner/Administrative.sol";
-import "../list/ChainList.sol";
 
 /**
  * Token清单
@@ -15,10 +14,6 @@ import "../list/ChainList.sol";
  * 通证基于不同链的定义方式，以字符串形式保存
  */
 contract JCCTokenList is Administrative {
-  using ChainList for ChainList.chainMap;
-
-  ChainList.chainMap chains;
-
   event LogChain(uint256 indexed chainId, string symbol, bool add);
 
   // 通证定义
@@ -45,39 +40,6 @@ contract JCCTokenList is Administrative {
 
   function strlen(string memory _str) internal pure returns (uint256) {
     return bytes(_str).length;
-  }
-
-  function addChain(uint256 _id, string _symbol) public onlyPrivileged {
-    require(chains.insert(_id, _symbol), "insert success");
-
-    emit LogChain(_id, _symbol, true);
-  }
-
-  function removeChain(uint256 _id) public onlyPrivileged {
-    ChainList.element memory c = chains.getById(_id);
-    require(chains.remove(_id), "remove success");
-
-    emit LogChain(c.id, c.symbol, false);
-  }
-
-  function getChainSymbolById(uint256 _id) public view returns (string symbol) {
-    return chains.getById(_id).symbol;
-  }
-
-  function getChainIdBySymbol(string _symbol) public view returns (uint256 id) {
-    return chains.getBySymbol(_symbol).id;
-  }
-
-  function getChainList(uint256 from, uint256 _count)
-    public
-    view
-    returns (ChainList.element[] memory)
-  {
-    return chains.getList(from, _count);
-  }
-
-  function chainCount() public view returns (uint256) {
-    return chains.count();
   }
 
   // function addToken(uint256 _id, uint256 _chainId )

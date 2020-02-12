@@ -8,7 +8,8 @@ import "../owner/Administrative.sol";
 contract JCCChainList is Administrative {
   using ChainList for ChainList.chainMap;
 
-  event LogChain(uint256 indexed chainId, bool add);
+  event Add(uint256 indexed chainId);
+  event Remove(uint256 indexed chainId);
 
   ChainList.chainMap chains;
 
@@ -16,13 +17,13 @@ contract JCCChainList is Administrative {
 
   function insert(uint256 _id, string _symbol) public returns (bool) {
     require(chains.insert(_id, _symbol), "add chain success");
-    emit LogChain(_id, true);
+    emit Add(_id);
     return true;
   }
 
   function remove(uint256 _id) public returns (bool) {
     require(chains.remove(_id), "add chain success");
-    emit LogChain(_id, false);
+    emit Remove(_id);
     return true;
   }
 

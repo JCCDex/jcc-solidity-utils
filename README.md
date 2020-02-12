@@ -39,27 +39,27 @@ jcc_moac_tool --config ~/.jcc_moac_tool/config.test.json \
 
 ## JCCChainList
 
-测试链地址: 0x3dc943fc03817d4d5197b174655784ff0bae131a
-主链地址: 0xc7078139d1cb927dea14fea083cec978fdecb32d
+测试链地址: 0xd6f5a87e84553b57b6dd822ff15955e7896523a9
+主链地址: 0x599c1ff28d1ec95ed0b0aff1cf6829496db6b413
 
 ```bash
 # 通过id查询
 jcc_moac_tool --config ~/.jcc_moac_tool/config.json \
-  --abi JCCChainList.json --contractAddr "0xc7078139d1cb927dea14fea083cec978fdecb32d" \
+  --abi JCCChainList.json --contractAddr "0x599c1ff28d1ec95ed0b0aff1cf6829496db6b413" \
   --method "getById" --parameters '314'
 
 # 通过名称查询
 jcc_moac_tool --config ~/.jcc_moac_tool/config.json \
-  --abi JCCChainList.json --contractAddr "0xc7078139d1cb927dea14fea083cec978fdecb32d" \
+  --abi JCCChainList.json --contractAddr "0x599c1ff28d1ec95ed0b0aff1cf6829496db6b413" \
   --method "getBySymbol" --parameters '"MOAC"'
 
 # 查询登记数量
 jcc_moac_tool --config ~/.jcc_moac_tool/config.json \
-  --abi JCCChainList.json --contractAddr "0xc7078139d1cb927dea14fea083cec978fdecb32d" \
+  --abi JCCChainList.json --contractAddr "0x599c1ff28d1ec95ed0b0aff1cf6829496db6b413" \
   --method "count"
 
 # 查询登记数量
 jcc_moac_tool --config ~/.jcc_moac_tool/config.json \
-  --abi JCCChainList.json --contractAddr "0xc7078139d1cb927dea14fea083cec978fdecb32d" \
+  --abi JCCChainList.json --contractAddr "0x599c1ff28d1ec95ed0b0aff1cf6829496db6b413" \
   --method "getList" --parameters '0,3'
 ```
