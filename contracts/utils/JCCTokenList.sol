@@ -24,20 +24,23 @@ contract JCCTokenList is Administrative {
 
   constructor() public Administrative() {}
 
-  function insert(uint256 _id, uint256 _chainId, string _issuer, string _symbol)
-    public
-    returns (bool)
-  {
+  function insert(
+    uint256 _id,
+    uint256 _chainId,
+    bytes32 _origin,
+    string _issuer,
+    string _symbol
+  ) public returns (bool) {
     require(
-      tokens.insert(_id, _chainId, _issuer, _symbol),
-      "add token success"
+      tokens.insert(_id, _chainId, _origin, _issuer, _symbol),
+      "add token failed"
     );
     emit Add(_id);
     return true;
   }
 
   function remove(uint256 _id) public returns (bool) {
-    require(tokens.remove(_id), "remove token success");
+    require(tokens.remove(_id), "remove token failed");
     emit Remove(_id);
     return true;
   }
@@ -64,6 +67,14 @@ contract JCCTokenList is Administrative {
     returns (TokenList.element)
   {
     return tokens.getByIssuer(_chainId, _issuer);
+  }
+
+  function getTokenList(bytes32 _origin)
+    public
+    view
+    returns (TokenList.element[])
+  {
+    return tokens.getTokenList(_origin);
   }
 
   function getList(uint256 from, uint256 _count)
