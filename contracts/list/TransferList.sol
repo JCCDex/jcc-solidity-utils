@@ -61,7 +61,7 @@ library TransferList {
     uint256 _tokenId,
     uint256 _amount,
     string _to
-  ) internal returns (bool) {
+  ) internal returns (bytes32) {
     element memory e = element({
       from: _from,
       tokenId: _tokenId,
@@ -76,7 +76,7 @@ library TransferList {
     self.list.push(e);
     self.map[_hash] = e.idx;
 
-    return true;
+    return getHash(e);
   }
 
   function count(transferMap storage self) internal view returns (uint256) {

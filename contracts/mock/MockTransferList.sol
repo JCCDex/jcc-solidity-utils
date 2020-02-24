@@ -11,7 +11,7 @@ contract MockTransferList {
 
   function insert(address _from, uint256 _tokenId, uint256 _amount, string _to)
     public
-    returns (bool)
+    returns (bytes32)
   {
     return transfers.insert(_from, _tokenId, _amount, _to);
   }
