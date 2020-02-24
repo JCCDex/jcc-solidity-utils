@@ -12,8 +12,8 @@ library TransferList {
   struct element {
     // 发起地址
     address from;
-    // 通过JCCTokenList合约维护的token id
-    uint256 tokenId;
+    // chainid+issuer计算的hash, chainid遵循BIP44,issuer遵守TokenList中规定
+    bytes32 tokenHash;
     // 数量，ERC20需要注意decimals
     uint256 amount;
     // 在数组中的索引
@@ -31,9 +31,9 @@ library TransferList {
 
   function getHash(element e) internal pure returns (bytes32) {
     return
-      keccak256(abi.encodePacked(e.from, e.tokenId, e.amount, e.idx, e.to));
+      keccak256(abi.encodePacked(e.from, e.tokenHash, e.amount, e.idx, e.to));
   }
-  function existById(transferMap storage self, uint256 _idx)
+  function existByIdx(transferMap storage self, uint256 _idx)
     internal
     view
     returns (bool)
@@ -58,13 +58,13 @@ library TransferList {
   function insert(
     transferMap storage self,
     address _from,
-    uint256 _tokenId,
+    bytes32 _tokenHash,
     uint256 _amount,
     string _to
   ) internal returns (bytes32) {
     element memory e = element({
       from: _from,
-      tokenId: _tokenId,
+      tokenHash: _tokenHash,
       amount: _amount,
       idx: self.list.length,
       to: _to
@@ -76,7 +76,7 @@ library TransferList {
     self.list.push(e);
     self.map[_hash] = e.idx;
 
-    return getHash(e);
+    return _hash;
   }
 
   function count(transferMap storage self) internal view returns (uint256) {
@@ -88,7 +88,7 @@ library TransferList {
     view
     returns (TransferList.element)
   {
-    require(existById(self, _idx), "index must small than current count");
+    require(existByIdx(self, _idx), "index must small than current count");
     return self.list[_idx];
   }
 

@@ -39,7 +39,7 @@ contract('TokenList', (accounts) => {
     MOAC: { id: 2, chainId: MOAC_CHAINID, origin: '0x0', issuer: '/', symbol: 'MOAC' },
     SWTC: { id: 3, chainId: JINGTUM_CHAINID, origin: '0x0', issuer: '/', symbol: 'SWTC' },
     JCC: { id: 4, chainId: ETH_CHAINID, origin: '0x0', issuer: '0x9BD4810a407812042F938d2f69f673843301cfa6/', symbol: 'JCC' },
-    JJCC: { id: 5, chainId: JINGTUM_CHAINID, origin: '0x0', issuer: 'jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or/', symbol: 'JJCC' },
+    JJCC: { id: 5, chainId: JINGTUM_CHAINID, origin: '0x0', issuer: 'jGa9J9TkqtBcUoHe2zqhVFFbgUVED6o9or/JJCC', symbol: 'JJCC' },
     MSJCC: { id: 6, chainId: MOAC_CHAINID, origin: '0x0', issuer: '0x599c1ff28d1ec95ed0b0aff1cf6829496db6b414/0xc905a87e84553b57b6dd822ff15955e7896523a9', symbol: 'MSJCC' },
     MJCC: { id: 7, chainId: MOAC_CHAINID, origin: '0x0', issuer: '0x599c1ff28d1ec95ed0b0aff1cf6829496db6b415/', symbol: 'MJCC' }
   };

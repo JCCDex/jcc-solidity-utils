@@ -23,7 +23,7 @@ library TokenList {
       所有链的原生通证默认标记不填写，除非另有规定(例如:EOS本身是一个合约)
       issuer格式: 合约地址/合约地址
       ETH类的通证通过合约地址区分，原生通证表示为 "/"
-      SWTC类的通证定义由"issuer/"来表示地址，issuer为空表示原生通证
+      SWTC类的通证定义由"issuer/名称"来表示地址，issuer为空表示原生通证
       MOAC应用链通过 "主链via地址/应用链合约"来表示issuer
       在同一条链上，不许重复
      */

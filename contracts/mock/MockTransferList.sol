@@ -9,11 +9,13 @@ contract MockTransferList {
 
   TransferList.transferMap transfers;
 
-  function insert(address _from, uint256 _tokenId, uint256 _amount, string _to)
-    public
-    returns (bytes32)
-  {
-    return transfers.insert(_from, _tokenId, _amount, _to);
+  function insert(
+    address _from,
+    bytes32 _tokenHash,
+    uint256 _amount,
+    string _to
+  ) public returns (bytes32) {
+    return transfers.insert(_from, _tokenHash, _amount, _to);
   }
 
   function getByIdx(uint256 _idx) public view returns (TransferList.element) {
