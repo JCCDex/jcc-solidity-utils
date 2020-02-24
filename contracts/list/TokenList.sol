@@ -62,7 +62,7 @@ library TokenList {
   {
     if (self.list.length == 0) return false;
     element storage e = self.list[self.mapSymbol[_symbolHash]];
-    return (getSymbolHash(e.chainId, e.symbol) == _symbolHash);
+    return (getHash(e.chainId, e.symbol) == _symbolHash);
   }
 
   function existIssuer(tokenMap storage self, bytes32 _issuerHash)
@@ -72,7 +72,7 @@ library TokenList {
   {
     if (self.list.length == 0) return false;
     element storage e = self.list[self.mapIssuer[_issuerHash]];
-    return (getIssuerHash(e.chainId, e.issuer) == _issuerHash);
+    return (getHash(e.chainId, e.issuer) == _issuerHash);
   }
 
   // 检查映射数组有无重复
@@ -121,9 +121,7 @@ library TokenList {
   {
     element storage e = self.list[_idx];
     bool isOrigin = e.origin == 0x0;
-    bytes32 _issuerHash = isOrigin
-      ? getIssuerHash(e.chainId, e.issuer)
-      : e.origin;
+    bytes32 _issuerHash = isOrigin ? getHash(e.chainId, e.issuer) : e.origin;
 
     bool _exist;
     uint256 row2Del;
@@ -153,20 +151,12 @@ library TokenList {
     return b.length;
   }
 
-  function getSymbolHash(uint256 _chainId, string _symbol)
+  function getHash(uint256 _chainId, string _name)
     internal
     pure
     returns (bytes32)
   {
-    return keccak256(abi.encodePacked(_chainId, _symbol));
-  }
-
-  function getIssuerHash(uint256 _chainId, string _issuer)
-    internal
-    pure
-    returns (bytes32)
-  {
-    return keccak256(abi.encodePacked(_chainId, _issuer));
+    return keccak256(abi.encodePacked(_chainId, _name));
   }
 
   /**
@@ -184,8 +174,8 @@ library TokenList {
       return false;
     }
 
-    bytes32 _symbolHash = getSymbolHash(_chainId, _symbol);
-    bytes32 _issuerHash = getIssuerHash(_chainId, _issuer);
+    bytes32 _symbolHash = getHash(_chainId, _symbol);
+    bytes32 _issuerHash = getHash(_chainId, _issuer);
 
     if (existSymbol(self, _symbolHash) || existIssuer(self, _issuerHash)) {
       return false;
@@ -233,8 +223,8 @@ library TokenList {
 
     self.list[row2Del] = keyToMove;
     self.mapId[keyToMove.id] = row2Del;
-    bytes32 _symbolHash = getSymbolHash(keyToMove.chainId, keyToMove.symbol);
-    bytes32 _issuerHash = getIssuerHash(keyToMove.chainId, keyToMove.issuer);
+    bytes32 _symbolHash = getHash(keyToMove.chainId, keyToMove.symbol);
+    bytes32 _issuerHash = getHash(keyToMove.chainId, keyToMove.issuer);
     self.mapSymbol[_symbolHash] = row2Del;
     self.mapIssuer[_issuerHash] = row2Del;
     self.list.length = self.list.length.sub(1);
@@ -269,7 +259,7 @@ library TokenList {
     view
     returns (TokenList.element)
   {
-    bytes32 _symbolHash = getSymbolHash(_chainId, _symbol);
+    bytes32 _symbolHash = getHash(_chainId, _symbol);
     require(existSymbol(self, _symbolHash), "symbol data must be exist");
     return self.list[self.mapSymbol[_symbolHash]];
   }
@@ -279,7 +269,7 @@ library TokenList {
     view
     returns (TokenList.element)
   {
-    bytes32 _issuerHash = getSymbolHash(_chainId, _issuer);
+    bytes32 _issuerHash = getHash(_chainId, _issuer);
     require(existIssuer(self, _issuerHash), "issuer data must be exist");
     return self.list[self.mapIssuer[_issuerHash]];
   }
