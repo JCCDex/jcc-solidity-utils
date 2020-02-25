@@ -14,7 +14,7 @@ contract MockCommandList {
     uint256 _toChain,
     uint256 _verbs,
     bytes32 _payloadHash
-  ) public returns (bool) {
+  ) public returns (uint256) {
     return
       commands.insert(msg.sender, _fromChain, _toChain, _verbs, _payloadHash);
   }

@@ -73,7 +73,7 @@ library CommandList {
     uint256 _toChain,
     uint256 _verbs,
     bytes32 _payloadHash
-  ) internal validVerbs(_verbs) returns (bool) {
+  ) internal validVerbs(_verbs) returns (uint256) {
     element memory e = element({
       submitter: _submitter,
       agent: address(0),
@@ -89,7 +89,7 @@ library CommandList {
     self.waiting.push(_idx);
     self.submitterCmds[_submitter].push(_idx);
 
-    return true;
+    return _idx;
   }
 
   function getIdx(uint256[] _arr, uint256 _idx)
