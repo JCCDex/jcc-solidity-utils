@@ -12,8 +12,8 @@ contract MockAddressUtils {
   }
 
   // 使用toString，因为js重载导致无法正常执行
-  function toString1(address _addr) public pure returns (string memory) {
-    return _addr.toString();
+  function getString(address _addr) public pure returns (string memory) {
+    return _addr.getString();
   }
   function fromString(string _str) public pure returns (address) {
     return address(0).fromString(_str);

@@ -18,7 +18,7 @@ contract('AddressUtils', (accounts) => {
     // console.log(ret, accounts[1]);
     assert.equal(ret.toLowerCase(), accounts[1].toLowerCase());
 
-    ret = await addressUtils.toString1(accounts[1]);
+    ret = await addressUtils.getString(accounts[1]);
     // console.log(ret, accounts[1]);
     assert.equal(ret.toLowerCase(), accounts[1].toLowerCase());
   });

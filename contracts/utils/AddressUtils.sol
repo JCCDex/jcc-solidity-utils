@@ -28,7 +28,8 @@ library AddressUtils {
     return _addr == address(0);
   }
 
-  function toString(address _addr) internal pure returns (string memory) {
+  // 使用toString，因为js重载导致无法正常执行
+  function getString(address _addr) internal pure returns (string memory) {
     bytes32 value = bytes32(uint256(_addr));
     bytes memory alphabet = "0123456789abcdef";
 

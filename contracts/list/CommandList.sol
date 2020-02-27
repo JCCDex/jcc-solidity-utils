@@ -169,6 +169,10 @@ library CommandList {
     // in waiting list
     if (self.list[_idx].status == 1) {
       // 调用者要检查msg.sender
+      require(
+        _agent == self.list[_idx].submitter,
+        "user only cancel him own command"
+      );
       return cancelFromWaiting(self, _idx);
     }
 
