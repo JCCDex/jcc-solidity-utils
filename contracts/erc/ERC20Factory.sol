@@ -30,8 +30,8 @@ contract ERC20Factory is Administrative, IExtendedERC20, Payload {
 
   //constructor
   constructor(
-    string name,
-    string symbol,
+    string memory name,
+    string memory symbol,
     uint8 decimals,
     uint256 totalSupply,
     bool minable
@@ -52,11 +52,11 @@ contract ERC20Factory is Administrative, IExtendedERC20, Payload {
     }
   }
 
-  function name() public view returns (string) {
+  function name() public view returns (string memory) {
     return _name;
   }
 
-  function symbol() public view returns (string) {
+  function symbol() public view returns (string memory) {
     return _symbol;
   }
 
@@ -209,12 +209,12 @@ contract ERC20Factory is Administrative, IExtendedERC20, Payload {
   }
 
   // fallback function
-  function() public {
+  function() external {
     require(false, "never receive fund.");
   }
 
   // only owner can kill
   function kill() public {
-    if (msg.sender == owner()) selfdestruct(owner());
+    if (msg.sender == owner()) selfdestruct(msg.sender);
   }
 }

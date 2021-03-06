@@ -4,9 +4,9 @@ pragma solidity >=0.4.24;
 IExtendedERC20 对ERC20标准扩展的一个接口定义
  */
 interface IExtendedERC20 {
-  function name() external view returns (string);
+  function name() external view returns (string memory);
 
-  function symbol() external view returns (string);
+  function symbol() external view returns (string memory);
 
   function decimals() external view returns (uint8);
 

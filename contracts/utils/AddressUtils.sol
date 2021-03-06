@@ -44,7 +44,7 @@ library AddressUtils {
     return string(str);
   }
 
-  function fromString(address _addr, string _str)
+  function fromString(address _addr, string memory _str)
     internal
     pure
     returns (address)
@@ -53,7 +53,7 @@ library AddressUtils {
 
     uint256 result = 0;
     for (uint256 i = 0; i < b.length; i++) {
-      uint256 c = uint256(b[i]);
+      uint256 c = uint256(uint8(b[i]));
       if (c >= 48 && c <= 57) {
         result = result * 16 + (c - 48);
       }
