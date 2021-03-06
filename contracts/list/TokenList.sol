@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../math/SafeMath.sol";
 
@@ -76,11 +76,11 @@ library TokenList {
   }
 
   // 检查映射数组有无重复
-  function existToken(tokenMap storage self, bytes32 _origin, uint256 _id)
-    internal
-    view
-    returns (bool, uint256)
-  {
+  function existToken(
+    tokenMap storage self,
+    bytes32 _origin,
+    uint256 _id
+  ) internal view returns (bool, uint256) {
     if (self.list.length == 0) return (false, 0);
 
     uint256[] storage _arr = self.mapToken[_origin];
@@ -95,10 +95,11 @@ library TokenList {
   }
 
   // 增加映射通证数组成员
-  function insertToken(tokenMap storage self, bytes32 _issuerHash, uint256 _idx)
-    internal
-    returns (bool)
-  {
+  function insertToken(
+    tokenMap storage self,
+    bytes32 _issuerHash,
+    uint256 _idx
+  ) internal returns (bool) {
     bool _exist;
     uint256 _originIdx;
     element storage e = self.list[_idx];
@@ -186,14 +187,15 @@ library TokenList {
       return false;
     }
 
-    element memory e = element({
-      idx: self.list.length,
-      id: _id,
-      chainId: _chainId,
-      origin: _origin,
-      issuer: _issuer,
-      symbol: _symbol
-    });
+    element memory e =
+      element({
+        idx: self.list.length,
+        id: _id,
+        chainId: _chainId,
+        origin: _origin,
+        issuer: _issuer,
+        symbol: _symbol
+      });
 
     self.list.push(e);
     self.mapId[_id] = e.idx;
@@ -254,21 +256,21 @@ library TokenList {
     return self.list[self.mapId[_id]];
   }
 
-  function getBySymbol(tokenMap storage self, uint256 _chainId, string _symbol)
-    internal
-    view
-    returns (TokenList.element)
-  {
+  function getBySymbol(
+    tokenMap storage self,
+    uint256 _chainId,
+    string _symbol
+  ) internal view returns (TokenList.element) {
     bytes32 _symbolHash = getHash(_chainId, _symbol);
     require(existSymbol(self, _symbolHash), "symbol data must be exist");
     return self.list[self.mapSymbol[_symbolHash]];
   }
 
-  function getByIssuer(tokenMap storage self, uint256 _chainId, string _issuer)
-    internal
-    view
-    returns (TokenList.element)
-  {
+  function getByIssuer(
+    tokenMap storage self,
+    uint256 _chainId,
+    string _issuer
+  ) internal view returns (TokenList.element) {
     bytes32 _issuerHash = getHash(_chainId, _issuer);
     require(existIssuer(self, _issuerHash), "issuer data must be exist");
     return self.list[self.mapIssuer[_issuerHash]];
@@ -299,11 +301,11 @@ library TokenList {
   /**
   @dev 从指定位置返回多条（不多于count）地址记录,如果不足则空缺
    */
-  function getList(tokenMap storage self, uint256 from, uint256 _count)
-    internal
-    view
-    returns (TokenList.element[] memory)
-  {
+  function getList(
+    tokenMap storage self,
+    uint256 from,
+    uint256 _count
+  ) internal view returns (TokenList.element[] memory) {
     uint256 _idx = 0;
     require(_count > 0, "return number must bigger than 0");
     TokenList.element[] memory res = new TokenList.element[](_count);

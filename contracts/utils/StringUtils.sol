@@ -34,7 +34,7 @@
  *      corresponding to the left and right parts of the string.
  */
 
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 /**
  * @dev Utility library of string.
@@ -46,7 +46,11 @@ library StringUtils {
     uint256 _ptr;
   }
 
-  function memcpy(uint256 dest, uint256 src, uint256 len) private pure {
+  function memcpy(
+    uint256 dest,
+    uint256 src,
+    uint256 len
+  ) private pure {
     // Copy word-length chunks while possible
     for (; len >= 32; len -= 32) {
       assembly {
@@ -66,10 +70,10 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns a slice containing the entire string.
-     * @param self The string to make a slice from.
-     * @return A newly allocated slice containing the entire string.
-     */
+   * @dev Returns a slice containing the entire string.
+   * @param self The string to make a slice from.
+   * @return A newly allocated slice containing the entire string.
+   */
   function toSlice(string memory self) internal pure returns (slice memory) {
     uint256 ptr;
     assembly {
@@ -79,10 +83,10 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns the length of a null-terminated bytes32 string.
-     * @param self The value to find the length of.
-     * @return The length of the string, from 0 to 32.
-     */
+   * @dev Returns the length of a null-terminated bytes32 string.
+   * @param self The value to find the length of.
+   * @return The length of the string, from 0 to 32.
+   */
   function len(bytes32 self) internal pure returns (uint256) {
     uint256 ret;
     if (self == 0) return 0;
@@ -109,12 +113,12 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns a slice containing the entire bytes32, interpreted as a
-     *      null-terminated utf-8 string.
-     * @param self The bytes32 value to convert to a slice.
-     * @return A new slice containing the value of the input argument up to the
-     *         first null.
-     */
+   * @dev Returns a slice containing the entire bytes32, interpreted as a
+   *      null-terminated utf-8 string.
+   * @param self The bytes32 value to convert to a slice.
+   * @return A new slice containing the value of the input argument up to the
+   *         first null.
+   */
   function toSliceB32(bytes32 self) internal pure returns (slice memory ret) {
     // Allocate space for `self` in memory, copy it there, and point ret at it
     assembly {
@@ -127,19 +131,19 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns a new slice containing the same data as the current slice.
-     * @param self The slice to copy.
-     * @return A new slice containing the same data as `self`.
-     */
+   * @dev Returns a new slice containing the same data as the current slice.
+   * @param self The slice to copy.
+   * @return A new slice containing the same data as `self`.
+   */
   function copy(slice memory self) internal pure returns (slice memory) {
     return slice(self._len, self._ptr);
   }
 
   /*
-     * @dev Copies a slice to a new string.
-     * @param self The slice to copy.
-     * @return A newly allocated string containing the slice's text.
-     */
+   * @dev Copies a slice to a new string.
+   * @param self The slice to copy.
+   * @return A newly allocated string containing the slice's text.
+   */
   function toString(slice memory self) internal pure returns (string memory) {
     string memory ret = new string(self._len);
     uint256 retptr;
@@ -152,13 +156,13 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns the length in runes of the slice. Note that this operation
-     *      takes time proportional to the length of the slice; avoid using it
-     *      in loops, and call `slice.empty()` if you only need to know whether
-     *      the slice is empty or not.
-     * @param self The slice to operate on.
-     * @return The length of the slice in runes.
-     */
+   * @dev Returns the length in runes of the slice. Note that this operation
+   *      takes time proportional to the length of the slice; avoid using it
+   *      in loops, and call `slice.empty()` if you only need to know whether
+   *      the slice is empty or not.
+   * @param self The slice to operate on.
+   * @return The length of the slice in runes.
+   */
   function len(slice memory self) internal pure returns (uint256 l) {
     // Starting at ptr-31 means the LSB will be the byte we care about
     uint256 ptr = self._ptr - 31;
@@ -185,23 +189,23 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns true if the slice is empty (has a length of 0).
-     * @param self The slice to operate on.
-     * @return True if the slice is empty, False otherwise.
-     */
+   * @dev Returns true if the slice is empty (has a length of 0).
+   * @param self The slice to operate on.
+   * @return True if the slice is empty, False otherwise.
+   */
   function empty(slice memory self) internal pure returns (bool) {
     return self._len == 0;
   }
 
   /*
-     * @dev Returns a positive number if `other` comes lexicographically after
-     *      `self`, a negative number if it comes before, or zero if the
-     *      contents of the two slices are equal. Comparison is done per-rune,
-     *      on unicode codepoints.
-     * @param self The first slice to compare.
-     * @param other The second slice to compare.
-     * @return The result of the comparison.
-     */
+   * @dev Returns a positive number if `other` comes lexicographically after
+   *      `self`, a negative number if it comes before, or zero if the
+   *      contents of the two slices are equal. Comparison is done per-rune,
+   *      on unicode codepoints.
+   * @param self The first slice to compare.
+   * @param other The second slice to compare.
+   * @return The result of the comparison.
+   */
   function compare(slice memory self, slice memory other)
     internal
     pure
@@ -235,11 +239,11 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns true if the two slices contain the same text.
-     * @param self The first slice to compare.
-     * @param self The second slice to compare.
-     * @return True if the slices are equal, false otherwise.
-     */
+   * @dev Returns true if the two slices contain the same text.
+   * @param self The first slice to compare.
+   * @param self The second slice to compare.
+   * @return True if the slices are equal, false otherwise.
+   */
   function equals(slice memory self, slice memory other)
     internal
     pure
@@ -249,12 +253,12 @@ library StringUtils {
   }
 
   /*
-     * @dev Extracts the first rune in the slice into `rune`, advancing the
-     *      slice to point to the next rune and returning `self`.
-     * @param self The slice to operate on.
-     * @param rune The slice that will contain the first rune.
-     * @return `rune`.
-     */
+   * @dev Extracts the first rune in the slice into `rune`, advancing the
+   *      slice to point to the next rune and returning `self`.
+   * @param self The slice to operate on.
+   * @param rune The slice that will contain the first rune.
+   * @return `rune`.
+   */
   function nextRune(slice memory self, slice memory rune)
     internal
     pure
@@ -298,11 +302,11 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns the first rune in the slice, advancing the slice to point
-     *      to the next rune.
-     * @param self The slice to operate on.
-     * @return A slice containing only the first rune from `self`.
-     */
+   * @dev Returns the first rune in the slice, advancing the slice to point
+   *      to the next rune.
+   * @param self The slice to operate on.
+   * @return A slice containing only the first rune from `self`.
+   */
   function nextRune(slice memory self)
     internal
     pure
@@ -312,10 +316,10 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns the number of the first codepoint in the slice.
-     * @param self The slice to operate on.
-     * @return The number of the first codepoint in the slice.
-     */
+   * @dev Returns the number of the first codepoint in the slice.
+   * @param self The slice to operate on.
+   * @return The number of the first codepoint in the slice.
+   */
   function ord(slice memory self) internal pure returns (uint256 ret) {
     if (self._len == 0) {
       return 0;
@@ -363,10 +367,10 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns the keccak-256 hash of the slice.
-     * @param self The slice to hash.
-     * @return The hash of the slice.
-     */
+   * @dev Returns the keccak-256 hash of the slice.
+   * @param self The slice to hash.
+   * @return The hash of the slice.
+   */
   function keccak(slice memory self) internal pure returns (bytes32 ret) {
     assembly {
       ret := keccak256(mload(add(self, 32)), mload(self))
@@ -374,11 +378,11 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns true if `self` starts with `needle`.
-     * @param self The slice to operate on.
-     * @param needle The slice to search for.
-     * @return True if the slice starts with the provided text, false otherwise.
-     */
+   * @dev Returns true if `self` starts with `needle`.
+   * @param self The slice to operate on.
+   * @param needle The slice to search for.
+   * @return True if the slice starts with the provided text, false otherwise.
+   */
   function startsWith(slice memory self, slice memory needle)
     internal
     pure
@@ -403,12 +407,12 @@ library StringUtils {
   }
 
   /*
-     * @dev If `self` starts with `needle`, `needle` is removed from the
-     *      beginning of `self`. Otherwise, `self` is unmodified.
-     * @param self The slice to operate on.
-     * @param needle The slice to search for.
-     * @return `self`
-     */
+   * @dev If `self` starts with `needle`, `needle` is removed from the
+   *      beginning of `self`. Otherwise, `self` is unmodified.
+   * @param self The slice to operate on.
+   * @param needle The slice to search for.
+   * @return `self`
+   */
   function beyond(slice memory self, slice memory needle)
     internal
     pure
@@ -437,11 +441,11 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns true if the slice ends with `needle`.
-     * @param self The slice to operate on.
-     * @param needle The slice to search for.
-     * @return True if the slice starts with the provided text, false otherwise.
-     */
+   * @dev Returns true if the slice ends with `needle`.
+   * @param self The slice to operate on.
+   * @param needle The slice to search for.
+   * @return True if the slice starts with the provided text, false otherwise.
+   */
   function endsWith(slice memory self, slice memory needle)
     internal
     pure
@@ -468,12 +472,12 @@ library StringUtils {
   }
 
   /*
-     * @dev If `self` ends with `needle`, `needle` is removed from the
-     *      end of `self`. Otherwise, `self` is unmodified.
-     * @param self The slice to operate on.
-     * @param needle The slice to search for.
-     * @return `self`
-     */
+   * @dev If `self` ends with `needle`, `needle` is removed from the
+   *      end of `self`. Otherwise, `self` is unmodified.
+   * @param self The slice to operate on.
+   * @param needle The slice to search for.
+   * @return `self`
+   */
   function until(slice memory self, slice memory needle)
     internal
     pure
@@ -608,13 +612,13 @@ library StringUtils {
   }
 
   /*
-     * @dev Modifies `self` to contain everything from the first occurrence of
-     *      `needle` to the end of the slice. `self` is set to the empty slice
-     *      if `needle` is not found.
-     * @param self The slice to search and modify.
-     * @param needle The text to search for.
-     * @return `self`.
-     */
+   * @dev Modifies `self` to contain everything from the first occurrence of
+   *      `needle` to the end of the slice. `self` is set to the empty slice
+   *      if `needle` is not found.
+   * @param self The slice to search and modify.
+   * @param needle The text to search for.
+   * @return `self`.
+   */
   function find(slice memory self, slice memory needle)
     internal
     pure
@@ -627,13 +631,13 @@ library StringUtils {
   }
 
   /*
-     * @dev Modifies `self` to contain the part of the string from the start of
-     *      `self` to the end of the first occurrence of `needle`. If `needle`
-     *      is not found, `self` is set to the empty slice.
-     * @param self The slice to search and modify.
-     * @param needle The text to search for.
-     * @return `self`.
-     */
+   * @dev Modifies `self` to contain the part of the string from the start of
+   *      `self` to the end of the first occurrence of `needle`. If `needle`
+   *      is not found, `self` is set to the empty slice.
+   * @param self The slice to search and modify.
+   * @param needle The text to search for.
+   * @return `self`.
+   */
   function rfind(slice memory self, slice memory needle)
     internal
     pure
@@ -645,20 +649,20 @@ library StringUtils {
   }
 
   /*
-     * @dev Splits the slice, setting `self` to everything after the first
-     *      occurrence of `needle`, and `token` to everything before it. If
-     *      `needle` does not occur in `self`, `self` is set to the empty slice,
-     *      and `token` is set to the entirety of `self`.
-     * @param self The slice to split.
-     * @param needle The text to search for in `self`.
-     * @param token An output parameter to which the first token is written.
-     * @return `token`.
-     */
-  function split(slice memory self, slice memory needle, slice memory token)
-    internal
-    pure
-    returns (slice memory)
-  {
+   * @dev Splits the slice, setting `self` to everything after the first
+   *      occurrence of `needle`, and `token` to everything before it. If
+   *      `needle` does not occur in `self`, `self` is set to the empty slice,
+   *      and `token` is set to the entirety of `self`.
+   * @param self The slice to split.
+   * @param needle The text to search for in `self`.
+   * @param token An output parameter to which the first token is written.
+   * @return `token`.
+   */
+  function split(
+    slice memory self,
+    slice memory needle,
+    slice memory token
+  ) internal pure returns (slice memory) {
     uint256 ptr = findPtr(self._len, self._ptr, needle._len, needle._ptr);
     token._ptr = self._ptr;
     token._len = ptr - self._ptr;
@@ -673,14 +677,14 @@ library StringUtils {
   }
 
   /*
-     * @dev Splits the slice, setting `self` to everything after the first
-     *      occurrence of `needle`, and returning everything before it. If
-     *      `needle` does not occur in `self`, `self` is set to the empty slice,
-     *      and the entirety of `self` is returned.
-     * @param self The slice to split.
-     * @param needle The text to search for in `self`.
-     * @return The part of `self` up to the first occurrence of `delim`.
-     */
+   * @dev Splits the slice, setting `self` to everything after the first
+   *      occurrence of `needle`, and returning everything before it. If
+   *      `needle` does not occur in `self`, `self` is set to the empty slice,
+   *      and the entirety of `self` is returned.
+   * @param self The slice to split.
+   * @param needle The text to search for in `self`.
+   * @return The part of `self` up to the first occurrence of `delim`.
+   */
   function split(slice memory self, slice memory needle)
     internal
     pure
@@ -690,20 +694,20 @@ library StringUtils {
   }
 
   /*
-     * @dev Splits the slice, setting `self` to everything before the last
-     *      occurrence of `needle`, and `token` to everything after it. If
-     *      `needle` does not occur in `self`, `self` is set to the empty slice,
-     *      and `token` is set to the entirety of `self`.
-     * @param self The slice to split.
-     * @param needle The text to search for in `self`.
-     * @param token An output parameter to which the first token is written.
-     * @return `token`.
-     */
-  function rsplit(slice memory self, slice memory needle, slice memory token)
-    internal
-    pure
-    returns (slice memory)
-  {
+   * @dev Splits the slice, setting `self` to everything before the last
+   *      occurrence of `needle`, and `token` to everything after it. If
+   *      `needle` does not occur in `self`, `self` is set to the empty slice,
+   *      and `token` is set to the entirety of `self`.
+   * @param self The slice to split.
+   * @param needle The text to search for in `self`.
+   * @param token An output parameter to which the first token is written.
+   * @return `token`.
+   */
+  function rsplit(
+    slice memory self,
+    slice memory needle,
+    slice memory token
+  ) internal pure returns (slice memory) {
     uint256 ptr = rfindPtr(self._len, self._ptr, needle._len, needle._ptr);
     token._ptr = ptr;
     token._len = self._len - (ptr - self._ptr);
@@ -717,14 +721,14 @@ library StringUtils {
   }
 
   /*
-     * @dev Splits the slice, setting `self` to everything before the last
-     *      occurrence of `needle`, and returning everything after it. If
-     *      `needle` does not occur in `self`, `self` is set to the empty slice,
-     *      and the entirety of `self` is returned.
-     * @param self The slice to split.
-     * @param needle The text to search for in `self`.
-     * @return The part of `self` after the last occurrence of `delim`.
-     */
+   * @dev Splits the slice, setting `self` to everything before the last
+   *      occurrence of `needle`, and returning everything after it. If
+   *      `needle` does not occur in `self`, `self` is set to the empty slice,
+   *      and the entirety of `self` is returned.
+   * @param self The slice to split.
+   * @param needle The text to search for in `self`.
+   * @return The part of `self` after the last occurrence of `delim`.
+   */
   function rsplit(slice memory self, slice memory needle)
     internal
     pure
@@ -734,18 +738,18 @@ library StringUtils {
   }
 
   /*
-     * @dev Counts the number of nonoverlapping occurrences of `needle` in `self`.
-     * @param self The slice to search.
-     * @param needle The text to search for in `self`.
-     * @return The number of occurrences of `needle` found in `self`.
-     */
+   * @dev Counts the number of nonoverlapping occurrences of `needle` in `self`.
+   * @param self The slice to search.
+   * @param needle The text to search for in `self`.
+   * @return The number of occurrences of `needle` found in `self`.
+   */
   function count(slice memory self, slice memory needle)
     internal
     pure
     returns (uint256 cnt)
   {
-    uint256 ptr = findPtr(self._len, self._ptr, needle._len, needle._ptr) +
-      needle._len;
+    uint256 ptr =
+      findPtr(self._len, self._ptr, needle._len, needle._ptr) + needle._len;
     while (ptr <= self._ptr + self._len) {
       cnt++;
       ptr =
@@ -755,11 +759,11 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns True if `self` contains `needle`.
-     * @param self The slice to search.
-     * @param needle The text to search for in `self`.
-     * @return True if `needle` is found in `self`, false otherwise.
-     */
+   * @dev Returns True if `self` contains `needle`.
+   * @param self The slice to search.
+   * @param needle The text to search for in `self`.
+   * @return True if `needle` is found in `self`, false otherwise.
+   */
   function contains(slice memory self, slice memory needle)
     internal
     pure
@@ -770,12 +774,12 @@ library StringUtils {
   }
 
   /*
-     * @dev Returns a newly allocated string containing the concatenation of
-     *      `self` and `other`.
-     * @param self The first slice to concatenate.
-     * @param other The second slice to concatenate.
-     * @return The concatenation of the two strings.
-     */
+   * @dev Returns a newly allocated string containing the concatenation of
+   *      `self` and `other`.
+   * @param self The first slice to concatenate.
+   * @param other The second slice to concatenate.
+   * @return The concatenation of the two strings.
+   */
   function concat(slice memory self, slice memory other)
     internal
     pure
@@ -792,13 +796,13 @@ library StringUtils {
   }
 
   /*
-     * @dev Joins an array of slices, using `self` as a delimiter, returning a
-     *      newly allocated string.
-     * @param self The delimiter to use.
-     * @param parts A list of slices to join.
-     * @return A newly allocated string containing all the slices in `parts`,
-     *         joined with `self`.
-     */
+   * @dev Joins an array of slices, using `self` as a delimiter, returning a
+   *      newly allocated string.
+   * @param self The delimiter to use.
+   * @param parts A list of slices to join.
+   * @return A newly allocated string containing all the slices in `parts`,
+   *         joined with `self`.
+   */
   function join(slice memory self, slice[] memory parts)
     internal
     pure

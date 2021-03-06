@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../math/SafeMath.sol";
 
@@ -33,6 +33,7 @@ library TransferList {
     return
       keccak256(abi.encodePacked(e.from, e.tokenHash, e.amount, e.idx, e.to));
   }
+
   function existByIdx(transferMap storage self, uint256 _idx)
     internal
     view
@@ -41,6 +42,7 @@ library TransferList {
     if (_idx >= self.list.length) return false;
     return true;
   }
+
   function existByHash(transferMap storage self, bytes32 _hash)
     internal
     view
@@ -62,13 +64,14 @@ library TransferList {
     uint256 _amount,
     string _to
   ) internal returns (bytes32) {
-    element memory e = element({
-      from: _from,
-      tokenHash: _tokenHash,
-      amount: _amount,
-      idx: self.list.length,
-      to: _to
-    });
+    element memory e =
+      element({
+        from: _from,
+        tokenHash: _tokenHash,
+        amount: _amount,
+        idx: self.list.length,
+        to: _to
+      });
 
     bytes32 _hash = getHash(e);
     require(!existByHash(self, _hash), "same transfer data exist");
@@ -104,11 +107,11 @@ library TransferList {
   /**
   @dev 从指定位置返回多条（不多于count）地址记录,如果不足则空缺
    */
-  function getList(transferMap storage self, uint256 from, uint256 _count)
-    internal
-    view
-    returns (TransferList.element[] memory)
-  {
+  function getList(
+    transferMap storage self,
+    uint256 from,
+    uint256 _count
+  ) internal view returns (TransferList.element[] memory) {
     uint256 _idx = 0;
     require(from >= self.list.length, "from must small than count");
     require(_count > 0, "return number must bigger than 0");

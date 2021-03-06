@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 /**
 @dev Administrative 为合约提供控制权限，可以通过继承该合约的方式获得这些功能
@@ -13,8 +13,14 @@ contract Administrative {
   address private _owner;
   address private _admin;
 
-  event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-  event AdministratorTransferred(address indexed previousAdmin, address indexed newAdmin);
+  event OwnershipTransferred(
+    address indexed previousOwner,
+    address indexed newOwner
+  );
+  event AdministratorTransferred(
+    address indexed previousAdmin,
+    address indexed newAdmin
+  );
 
   /**
   @dev 初始化合约时，部署合约的账户自动成为owner
@@ -37,7 +43,10 @@ contract Administrative {
   }
 
   modifier onlyPrivileged() {
-    require((msg.sender == _owner) || (msg.sender == _admin), "only owner or administrator can modify this");
+    require(
+      (msg.sender == _owner) || (msg.sender == _admin),
+      "only owner or administrator can modify this"
+    );
     _;
   }
 
@@ -56,16 +65,19 @@ contract Administrative {
   }
 
   function transferAdministrator(address newAdmin) public onlyPrivileged {
-    require(newAdmin != address(0), "Can not transfer administrator to zero address");
+    require(
+      newAdmin != address(0),
+      "Can not transfer administrator to zero address"
+    );
     emit AdministratorTransferred(_admin, newAdmin);
     _admin = newAdmin;
   }
 
-  function owner() public view returns(address) {
+  function owner() public view returns (address) {
     return _owner;
   }
 
-  function admin() public view returns(address) {
+  function admin() public view returns (address) {
     return _admin;
   }
 }

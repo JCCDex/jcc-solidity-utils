@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../math/SafeMath.sol";
 
@@ -8,21 +8,24 @@ import "../math/SafeMath.sol";
 library UintList {
   using SafeMath for uint256;
 
-  struct uintMap
-  {
+  struct uintMap {
     mapping(uint256 => uint256) mapList;
     uint256[] list;
   }
 
-  function exist(uintMap storage self, uint256 _num) internal view returns(bool) {
-    if(self.list.length == 0) return false;
+  function exist(uintMap storage self, uint256 _num)
+    internal
+    view
+    returns (bool)
+  {
+    if (self.list.length == 0) return false;
     return (self.list[self.mapList[_num]] == _num);
   }
 
   /**
   @dev 增加新的数据，重复的数据返回失败
    */
-  function insert(uintMap storage self, uint256 _num) internal returns (bool){
+  function insert(uintMap storage self, uint256 _num) internal returns (bool) {
     if (exist(self, _num)) {
       return false;
     }
@@ -35,7 +38,7 @@ library UintList {
   /**
   @dev 删除无符号整型数，相应的下标索引数组自动缩减
    */
-  function remove(uintMap storage self, uint256 _num) internal returns (bool){
+  function remove(uintMap storage self, uint256 _num) internal returns (bool) {
     if (!exist(self, _num)) {
       return false;
     }
@@ -49,11 +52,15 @@ library UintList {
     return true;
   }
 
-  function count(uintMap storage self) internal view returns (uint256){
+  function count(uintMap storage self) internal view returns (uint256) {
     return self.list.length;
   }
 
-  function get(uintMap storage self, uint256 index) internal view returns (uint256) {
+  function get(uintMap storage self, uint256 index)
+    internal
+    view
+    returns (uint256)
+  {
     require(index < self.list.length, "index must small than current count");
     return self.list[index];
   }
@@ -61,7 +68,11 @@ library UintList {
   /**
   @dev 从指定位置返回多条（不多于count）记录,如果不足则空缺，为避免该情况，应该先获取数据量后再决定参数
    */
-  function getList(uintMap storage self, uint256 from, uint256 _count) internal view returns (uint256[] memory){
+  function getList(
+    uintMap storage self,
+    uint256 from,
+    uint256 _count
+  ) internal view returns (uint256[] memory) {
     uint256 _idx = 0;
     require(_count > 0, "return number must bigger than 0");
     uint256[] memory res = new uint256[](_count);

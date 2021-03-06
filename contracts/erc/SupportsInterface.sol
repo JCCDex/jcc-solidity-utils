@@ -1,39 +1,29 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../interface/IERC165.sol";
 
 /**
  * @dev Implementation of standard for detect smart contract interfaces.
  */
-contract SupportsInterface is IERC165
-{
-
+contract SupportsInterface is IERC165 {
   /**
-  * @dev Mapping of supported intefraces.
-  * @notice You must not set element 0xffffffff to true.
-  */
+   * @dev Mapping of supported intefraces.
+   * @notice You must not set element 0xffffffff to true.
+   */
   mapping(bytes4 => bool) internal supportedInterfaces;
 
   /**
-  * @dev Contract constructor.
-  */
-  constructor()
-    public
-  {
+   * @dev Contract constructor.
+   */
+  constructor() public {
     supportedInterfaces[0x01ffc9a7] = true; // ERC165
   }
 
   /**
-  * @dev Function to check which interfaces are suported by this contract.
-  * @param _interfaceID Id of the interface.
-  */
-  function supportsInterface(
-    bytes4 _interfaceID
-  )
-    external
-    view
-    returns (bool)
-  {
+   * @dev Function to check which interfaces are suported by this contract.
+   * @param _interfaceID Id of the interface.
+   */
+  function supportsInterface(bytes4 _interfaceID) external view returns (bool) {
     return supportedInterfaces[_interfaceID];
   }
 }

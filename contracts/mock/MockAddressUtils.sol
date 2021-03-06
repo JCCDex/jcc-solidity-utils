@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 pragma experimental ABIEncoderV2;
 
 import "../utils/AddressUtils.sol";
@@ -15,6 +15,7 @@ contract MockAddressUtils {
   function getString(address _addr) public pure returns (string memory) {
     return _addr.getString();
   }
+
   function fromString(string _str) public pure returns (address) {
     return address(0).fromString(_str);
   }

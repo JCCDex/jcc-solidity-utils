@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../list/AddressList.sol";
 
@@ -20,7 +20,11 @@ contract MockAddressList {
     return planUsers.get(_idx);
   }
 
-  function getList(uint256 from, uint256 _count) public view returns (address[] memory) {
+  function getList(uint256 from, uint256 _count)
+    public
+    view
+    returns (address[] memory)
+  {
     return planUsers.getList(from, _count);
   }
 

@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 pragma experimental ABIEncoderV2;
 
 import "../list/BalanceList.sol";
@@ -25,7 +25,11 @@ contract MockBalanceList {
     return _balance.get(_idx);
   }
 
-  function getList(uint256 from, uint256 count) public view returns (BalanceList.element[] memory) {
+  function getList(uint256 from, uint256 count)
+    public
+    view
+    returns (BalanceList.element[] memory)
+  {
     return _balance.getList(from, count);
   }
 

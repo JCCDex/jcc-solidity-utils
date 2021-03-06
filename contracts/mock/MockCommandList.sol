@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 pragma experimental ABIEncoderV2;
 
 import "../list/CommandList.sol";
@@ -22,24 +22,31 @@ contract MockCommandList {
   function lock(uint256 _idx) public returns (bool) {
     return commands.lock(msg.sender, _idx);
   }
+
   function cancel(uint256 _idx) public returns (bool) {
     return commands.cancel(msg.sender, _idx);
   }
+
   function complete(uint256 _idx) public returns (bool) {
     return commands.complete(msg.sender, _idx);
   }
+
   function count() public view returns (uint256) {
     return commands.count();
   }
+
   function countWaiting() public view returns (uint256) {
     return commands.countWaiting();
   }
+
   function countLocking() public view returns (uint256) {
     return commands.countLocking();
   }
+
   function countCanceled() public view returns (uint256) {
     return commands.countCanceled();
   }
+
   function countCompleted() public view returns (uint256) {
     return commands.countCompleted();
   }
@@ -67,26 +74,28 @@ contract MockCommandList {
   function getIdxByAgent(address _agent) public view returns (uint256[]) {
     return commands.getIdxByAgent(_agent);
   }
+
   function getWaitingIdx() public view returns (uint256[]) {
     return commands.getWaitingIdx();
   }
+
   function getLockingIdx() public view returns (uint256[]) {
     return commands.getLockingIdx();
   }
 
-  function getBySubmitter(address _submitter, uint256 _from, uint256 _count)
-    public
-    view
-    returns (CommandList.element[] memory)
-  {
+  function getBySubmitter(
+    address _submitter,
+    uint256 _from,
+    uint256 _count
+  ) public view returns (CommandList.element[] memory) {
     return commands.getBySubmitter(_submitter, _from, _count);
   }
 
-  function getByAgent(address _agent, uint256 _from, uint256 _count)
-    public
-    view
-    returns (CommandList.element[] memory)
-  {
+  function getByAgent(
+    address _agent,
+    uint256 _from,
+    uint256 _count
+  ) public view returns (CommandList.element[] memory) {
     return commands.getByAgent(_agent, _from, _count);
   }
 

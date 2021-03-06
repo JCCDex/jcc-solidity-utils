@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../list/UintList.sol";
 
@@ -20,7 +20,11 @@ contract MockUintList {
     return uints.get(_idx);
   }
 
-  function getList(uint256 from, uint256 _count) public view returns (uint256[] memory) {
+  function getList(uint256 from, uint256 _count)
+    public
+    view
+    returns (uint256[] memory)
+  {
     return uints.getList(from, _count);
   }
 

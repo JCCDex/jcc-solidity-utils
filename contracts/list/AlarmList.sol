@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../math/SafeMath.sol";
 
@@ -9,8 +9,7 @@ library AlarmList {
   using SafeMath for uint256;
 
   // 定时任务定义
-  struct element
-  {
+  struct element {
     // 合约地址
     address contractAddr;
     // 创建者地址
@@ -24,14 +23,17 @@ library AlarmList {
     // 周期
     uint256 peroid;
   }
-  struct alarmMap
-  {
+  struct alarmMap {
     mapping(address => uint256) mapList;
     element[] list;
   }
 
-  function exist(alarmMap storage self, address _addr) internal view returns(bool) {
-    if(self.list.length == 0) return false;
+  function exist(alarmMap storage self, address _addr)
+    internal
+    view
+    returns (bool)
+  {
+    if (self.list.length == 0) return false;
     return (self.list[self.mapList[_addr]].contractAddr == _addr);
   }
 
@@ -44,18 +46,21 @@ library AlarmList {
     address _creator,
     uint256 _type,
     uint256 _begin,
-    uint256 _peroid) internal returns (bool){
+    uint256 _peroid
+  ) internal returns (bool) {
     if (exist(self, _addr)) {
       return false;
     }
 
-    element memory e = element({
-      contractAddr: _addr,
-      creatorAddr: _creator,
-      idx: self.list.length,
-      alarmType: _type,
-      begin: _begin,
-      peroid: _peroid});
+    element memory e =
+      element({
+        contractAddr: _addr,
+        creatorAddr: _creator,
+        idx: self.list.length,
+        alarmType: _type,
+        begin: _begin,
+        peroid: _peroid
+      });
     self.list.push(e);
     self.mapList[_addr] = e.idx;
     return true;
@@ -64,7 +69,10 @@ library AlarmList {
   /**
   @dev 删除地址，相应的下标索引数组自动缩减
    */
-  function remove(alarmMap storage self, address _addr) internal returns (bool){
+  function remove(alarmMap storage self, address _addr)
+    internal
+    returns (bool)
+  {
     if (!exist(self, _addr)) {
       return false;
     }
@@ -78,16 +86,24 @@ library AlarmList {
     return true;
   }
 
-  function count(alarmMap storage self) internal view returns (uint256){
+  function count(alarmMap storage self) internal view returns (uint256) {
     return self.list.length;
   }
 
-  function get(alarmMap storage self, uint256 index) internal view returns (AlarmList.element){
+  function get(alarmMap storage self, uint256 index)
+    internal
+    view
+    returns (AlarmList.element)
+  {
     require(index < self.list.length, "index must small than current count");
     return self.list[index];
   }
 
-  function getByAddr(alarmMap storage self, address _addr) internal view returns (AlarmList.element){
+  function getByAddr(alarmMap storage self, address _addr)
+    internal
+    view
+    returns (AlarmList.element)
+  {
     require(exist(self, _addr), "alarm must exist");
     return self.list[self.mapList[_addr]];
   }
@@ -95,7 +111,11 @@ library AlarmList {
   /**
   @dev 从指定位置返回多条（不多于count）地址记录,如果不足则空缺
    */
-  function getList(alarmMap storage self, uint256 from, uint256 _count) internal view returns (AlarmList.element[] memory){
+  function getList(
+    alarmMap storage self,
+    uint256 from,
+    uint256 _count
+  ) internal view returns (AlarmList.element[] memory) {
     uint256 _idx = 0;
     require(_count > 0, "return number must bigger than 0");
     AlarmList.element[] memory res = new AlarmList.element[](_count);

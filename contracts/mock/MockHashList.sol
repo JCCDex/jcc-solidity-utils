@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../list/HashList.sol";
 
@@ -20,7 +20,11 @@ contract MockHashList {
     return hashs.get(_idx);
   }
 
-  function getList(uint256 from, uint256 _count) public view returns (bytes32[] memory) {
+  function getList(uint256 from, uint256 _count)
+    public
+    view
+    returns (bytes32[] memory)
+  {
     return hashs.getList(from, _count);
   }
 

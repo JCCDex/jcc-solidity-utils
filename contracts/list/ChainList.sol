@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 import "../math/SafeMath.sol";
 
@@ -34,6 +34,7 @@ library ChainList {
     return (self.list[self.mapId[_id]].id == _id &&
       getStringLen(self.list[self.mapId[_id]].symbol) > 0);
   }
+
   function getStringLen(string _str) internal pure returns (uint256) {
     bytes memory b = bytes(_str);
     require(b.length <= 1024, "too large string make overflow risk");
@@ -47,19 +48,17 @@ library ChainList {
   /**
   @dev 增加新定时定义，重复的ID返回失败
    */
-  function insert(chainMap storage self, uint256 _id, string _symbol)
-    internal
-    returns (bool)
-  {
+  function insert(
+    chainMap storage self,
+    uint256 _id,
+    string _symbol
+  ) internal returns (bool) {
     if (exist(self, _id)) {
       return false;
     }
 
-    element memory e = element({
-      idx: self.list.length,
-      id: _id,
-      symbol: _symbol
-    });
+    element memory e =
+      element({idx: self.list.length, id: _id, symbol: _symbol});
 
     self.list.push(e);
     self.mapId[_id] = e.idx;
@@ -119,11 +118,11 @@ library ChainList {
   /**
   @dev 从指定位置返回多条（不多于count）地址记录,如果不足则空缺
    */
-  function getList(chainMap storage self, uint256 from, uint256 _count)
-    internal
-    view
-    returns (ChainList.element[] memory)
-  {
+  function getList(
+    chainMap storage self,
+    uint256 from,
+    uint256 _count
+  ) internal view returns (ChainList.element[] memory) {
     uint256 _idx = 0;
     require(_count > 0, "return number must bigger than 0");
     ChainList.element[] memory res = new ChainList.element[](_count);

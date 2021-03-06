@@ -1,13 +1,10 @@
-pragma solidity 0.4.24;
+pragma solidity >=0.4.24;
 
 /**
 可升级合约接口定义
  */
 interface IUpgradeable {
-    function upgrade(address newImpl) external;
+  function upgrade(address newImpl) external;
 
-    event Upgrade(
-        address indexed newAddress,
-        address indexed oldAddress
-    );
+  event Upgrade(address indexed newAddress, address indexed oldAddress);
 }
